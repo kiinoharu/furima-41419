@@ -75,5 +75,26 @@ RSpec.describe User, type: :model do
       @user.valid?
       expect(@user.errors.full_messages).to include("Date of birth can't be blank")
     end
+
+    it 'パスワードが英字のみの場合は無効である' do
+      @user.password = 'password'
+      @user.password_confirmation = 'password'
+      expect(@user).not_to be_valid
+      expect(@user.errors[:password]).to include('must include both letters and numbers.')
+    end
+
+    it 'パスワードが数字のみの場合は無効である' do
+      @user.password = '12345678'
+      @user.password_confirmation = '12345678'
+      expect(@user).not_to be_valid
+      expect(@user.errors[:password]).to include('must include both letters and numbers.')
+    end
+
+    it 'パスワードに英字と数字が含まれていない場合は無効である' do
+      @user.password = '!!!!!!!!'
+      @user.password_confirmation = '!!!!!!!!'
+      expect(@user).not_to be_valid
+      expect(@user.errors[:password]).to include('must include both letters and numbers.')
+    end
   end
 end
