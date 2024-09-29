@@ -12,4 +12,7 @@ class Item < ApplicationRecord
   validates :prefecture_id,          presence: true
   validates :shipping_day_id,        presence: true
   validates :price,                  presence: true
+
+  extend ActiveHash::Associations::ActiveRecordExtensions
+  belongs_to :category
 end
