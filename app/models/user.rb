@@ -26,4 +26,6 @@ class User < ApplicationRecord
 
     errors.add(:password, 'must include both letters and numbers.')
   end
+
+  has_many :items
 end
