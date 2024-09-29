@@ -58,6 +58,27 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
 
+      it 'パスワードが英字のみの場合は無効である' do
+        @user.password = 'password'
+        @user.password_confirmation = 'password'
+        expect(@user).not_to be_valid
+        expect(@user.errors[:password]).to include('must include both letters and numbers.')
+      end
+
+      it 'パスワードが数字のみの場合は無効である' do
+        @user.password = '12345678'
+        @user.password_confirmation = '12345678'
+        expect(@user).not_to be_valid
+        expect(@user.errors[:password]).to include('must include both letters and numbers.')
+      end
+
+      it 'パスワードに英字と数字が含まれていない場合は無効である' do
+        @user.password = '!!!!!!!!'
+        @user.password_confirmation = '!!!!!!!!'
+        expect(@user).not_to be_valid
+        expect(@user.errors[:password]).to include('must include both letters and numbers.')
+      end
+
       it 'first_nameが空では登録できない' do
         @user.first_name = ''
         @user.valid?
@@ -110,27 +131,6 @@ RSpec.describe User, type: :model do
         @user.date_of_birth = ''
         @user.valid?
         expect(@user.errors.full_messages).to include("Date of birth can't be blank")
-      end
-
-      it 'パスワードが英字のみの場合は無効である' do
-        @user.password = 'password'
-        @user.password_confirmation = 'password'
-        expect(@user).not_to be_valid
-        expect(@user.errors[:password]).to include('must include both letters and numbers.')
-      end
-
-      it 'パスワードが数字のみの場合は無効である' do
-        @user.password = '12345678'
-        @user.password_confirmation = '12345678'
-        expect(@user).not_to be_valid
-        expect(@user.errors[:password]).to include('must include both letters and numbers.')
-      end
-
-      it 'パスワードに英字と数字が含まれていない場合は無効である' do
-        @user.password = '!!!!!!!!'
-        @user.password_confirmation = '!!!!!!!!'
-        expect(@user).not_to be_valid
-        expect(@user.errors[:password]).to include('must include both letters and numbers.')
       end
     end
   end
