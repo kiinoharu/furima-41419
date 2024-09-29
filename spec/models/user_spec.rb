@@ -3,17 +3,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   describe 'ユーザー新規登録' do
     before do
-      @user = User.new(
-        nickname: 'testuser',
-        first_name: '太郎',
-        last_name: '山田',
-        first_name_kana: 'タロウ',
-        last_name_kana: 'ヤマダ',
-        date_of_birth: '1990-01-01',
-        email: 'test@example.com',
-        password: 'password123',
-        password_confirmation: 'password123'
-      )
+      @user = FactoryBot.build(:user)
     end
 
     it 'nicknameが空では登録できない' do
