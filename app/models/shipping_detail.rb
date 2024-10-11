@@ -7,4 +7,7 @@ class ShippingDetail < ApplicationRecord
   validates :address, presence: true
   validates :phone_number, presence: true,
                            format: { with: /\A\d{10,11}\z/, message: 'is invalid. Enter a 10 or 11 digit number.' }
+
+  extend ActiveHash::Associations::ActiveRecordExtensions
+  belongs_to_active_hash :prefecture
 end
