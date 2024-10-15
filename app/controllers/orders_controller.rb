@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_item, only: [:index, :create]
-
+  before_action :redirect_if_owned_or_sold_out, only: [:index]
   def index
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @order_shipping = OrderShipping.new # 正しいクラス名を使用
@@ -38,4 +39,10 @@ class OrdersController < ApplicationController
       currency: 'jpy' # 日本円
     )
   end
+end
+
+def redirect_if_owned_or_sold_out
+  return unless @item.user_id == current_user.id || @item.sold_out? # 自身が出品した商品または売却済み商品の場合
+
+  redirect_to root_path
 end
