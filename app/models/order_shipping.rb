@@ -1,6 +1,6 @@
 class OrderShipping
   include ActiveModel::Model
-  attr_accessor :postal_code, :prefecture_id, :city, :address, :phone_number, :token, :item_id, :user_id
+  attr_accessor :postal_code, :prefecture_id, :city, :address, :building_name, :phone_number, :token, :item_id, :user_id
 
   # バリデーション
   validates :postal_code, :prefecture_id, :city, :address, :phone_number, :token, presence: true
@@ -18,6 +18,7 @@ class OrderShipping
       prefecture_id:,
       city:,
       address:,
+      building_name:,
       phone_number:,
       order_id: order.id
     )
