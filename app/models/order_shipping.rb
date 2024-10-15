@@ -20,7 +20,7 @@ class OrderShipping
       address:,
       building_name:,
       phone_number:,
-      order_id: order.id
+      order_id:
     )
   end
 end
