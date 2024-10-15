@@ -12,15 +12,20 @@ class OrderShipping
     # Orderの保存
     order = Order.create(user_id:, item_id:)
 
-    # ShippingDetailの保存
-    ShippingDetail.create(
-      postal_code:,
-      prefecture_id:,
-      city:,
-      address:,
-      building_name:,
-      phone_number:,
-      order_id: order.id
-    )
+    if order.persisted?
+      # ShippingDetailの保存
+      ShippingDetail.create(
+        postal_code:,
+        prefecture_id:,
+        city:,
+        address:,
+        building_name:,
+        phone_number:,
+        order_id: order.id
+      )
+      Item.find(item_id).mark_as_sold_out!
+    else
+      false
+    end
   end
 end
