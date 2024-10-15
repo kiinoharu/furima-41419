@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   before_action :redirect_if_owned_or_sold_out, only: [:index]
   def index
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
-    @order_shipping = OrderShipping.new # 正しいクラス名を使用
+    @order_shipping = OrderShipping.new
   end
 
   def create
