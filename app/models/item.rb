@@ -21,4 +21,8 @@ class Item < ApplicationRecord
   belongs_to :shipping_fee_burden
   belongs_to :prefecture
   belongs_to :shipping_day
+
+  def sold_out?
+    sold_out
+  end
 end
