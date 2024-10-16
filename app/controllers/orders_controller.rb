@@ -39,10 +39,10 @@ class OrdersController < ApplicationController
       currency: 'jpy' # 日本円
     )
   end
-end
 
-def redirect_if_owned_or_sold_out
-  return unless @item.user_id == current_user.id || @item.sold_out? # 自身が出品した商品または売却済み商品の場合
+  def redirect_if_owned_or_sold_out
+    return unless @item.user_id == current_user.id || @item.sold_out? # 自身が出品した商品または売却済み商品の場合
 
-  redirect_to root_path
+    redirect_to root_path
+  end
 end
