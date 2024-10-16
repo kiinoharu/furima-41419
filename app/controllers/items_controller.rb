@@ -59,7 +59,7 @@ class ItemsController < ApplicationController
   end
 
   def redirect_if_owned_or_sold_out
-    return unless @item.user_id == current_user.id || @item.sold_out?
+    return unless @item.user_id != current_user.id || @item.sold_out?
 
     redirect_to root_path
   end
