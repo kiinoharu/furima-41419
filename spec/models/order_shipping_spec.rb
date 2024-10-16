@@ -4,7 +4,8 @@ RSpec.describe OrderShipping, type: :model do
   before do
     user = FactoryBot.create(:user)
     item = FactoryBot.create(:item)
-    @order_shipping = FactoryBot.build(:order_shipping)
+    @order_shipping = FactoryBot.build(:order_shipping, user_id: user.id, item_id: item.id)
+    sleep(3)
   end
 
   describe '商品購入機能' do
@@ -78,6 +79,18 @@ RSpec.describe OrderShipping, type: :model do
         @order_shipping.token = ''
         @order_shipping.valid?
         expect(@order_shipping.errors.full_messages).to include("Token can't be blank")
+      end
+
+      it 'user_idが空だと保存できない' do
+        @order_shipping.user_id = nil
+        @order_shipping.valid?
+        expect(@order_shipping.errors.full_messages).to include("User can't be blank")
+      end
+
+      it 'item_idが空だと保存できない' do
+        @order_shipping.item_id = nil
+        @order_shipping.valid?
+        expect(@order_shipping.errors.full_messages).to include("Item can't be blank")
       end
     end
   end
