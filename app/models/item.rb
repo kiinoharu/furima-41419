@@ -21,4 +21,13 @@ class Item < ApplicationRecord
   belongs_to :shipping_fee_burden
   belongs_to :prefecture
   belongs_to :shipping_day
+  has_one :order
+
+  def sold_out?
+    sold_out
+  end
+
+  def mark_as_sold_out!
+    update(sold_out: true)
+  end
 end

@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :authorize_user!, only: [:edit, :update, :destroy]
+  before_action :redirect_if_owned_or_sold_out, only: [:edit]
 
   def index
     @items = Item.order(created_at: :desc)
@@ -55,5 +56,11 @@ class ItemsController < ApplicationController
     params.require(:item).permit(:image, :item_name, :item_description, :category_id, :item_condition_id, :shipping_fee_burden_id,
                                  :prefecture_id, :shipping_day_id, :price)
           .merge(user_id: current_user.id)
+  end
+
+  def redirect_if_owned_or_sold_out
+    return unless @item.user_id == current_user.id || @item.sold_out?
+
+    redirect_to root_path
   end
 end
